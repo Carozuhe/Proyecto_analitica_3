@@ -1,0 +1,64 @@
+RESUMEN DEL DATAFRAME PREPARADO
+========================================
+Filas: 3755
+Columnas: 16
+Filas repetidas exactas (conservadas): 1171
+Tratamiento: se conservan porque el dataset no incluye un identificador que permita distinguir duplicados erróneos de observaciones legítimas.
+Sensibilidad al eliminar duplicados exactos:
+version                          Sensibilidad; sin duplicados exactos
+filas                                                            2584
+columnas                                                           16
+duplicados_exactos                                                  0
+porcentaje_duplicados_exactos                                     0.0
+valores_nulos                                                       0
+salario_usd_promedio                                        133409.28
+salario_usd_mediana                                          130000.0
+
+Variables derivadas: remote_work_mode, experience_level_order, company_size_order, work_location_relation, salary_usd_quartile.
+
+Columnas y tipos:
+- work_year: Int64
+- experience_level: object
+- employment_type: object
+- job_title: object
+- salary: Int64
+- salary_currency: object
+- salary_in_usd: Int64
+- employee_residence: object
+- remote_ratio: Int64
+- company_location: object
+- company_size: object
+- remote_work_mode: object
+- experience_level_order: Int64
+- company_size_order: Int64
+- work_location_relation: object
+- salary_usd_quartile: category
+
+Valores nulos por columna:
+- work_year: 0
+- experience_level: 0
+- employment_type: 0
+- job_title: 0
+- salary: 0
+- salary_currency: 0
+- salary_in_usd: 0
+- employee_residence: 0
+- remote_ratio: 0
+- company_location: 0
+- company_size: 0
+- remote_work_mode: 0
+- experience_level_order: 0
+- company_size_order: 0
+- work_location_relation: 0
+- salary_usd_quartile: 0
+
+Estadísticas descriptivas de las columnas numéricas:
+       work_year      salary  salary_in_usd  remote_ratio  experience_level_order  company_size_order
+count     3755.0      3755.0         3755.0        3755.0                  3755.0              3755.0
+mean     2022.37   190695.57      137570.39         46.27                    2.65                2.08
+std         0.69    671676.5       63055.63         48.59                    0.68                0.39
+min       2020.0      6000.0         5132.0           0.0                     1.0                 1.0
+25%       2022.0    100000.0        95000.0           0.0                     2.0                 2.0
+50%       2022.0    138000.0       135000.0           0.0                     3.0                 2.0
+75%       2023.0    180000.0       175000.0         100.0                     3.0                 2.0
+max       2023.0  30400000.0       450000.0         100.0                     4.0                 3.0

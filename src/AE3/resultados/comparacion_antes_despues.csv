@@ -1,0 +1,4 @@
+﻿version,filas,columnas,duplicados_exactos,porcentaje_duplicados_exactos,valores_nulos,salario_usd_promedio,salario_usd_mediana
+Original,3755,11,1171,31.19,0,137570.39,135000.0
+Preparado; duplicados conservados,3755,16,1171,31.19,0,137570.39,135000.0
+Sensibilidad; sin duplicados exactos,2584,16,0,0.0,0,133409.28,130000.0

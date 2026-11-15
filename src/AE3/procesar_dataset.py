@@ -36,6 +36,8 @@ columnas_requeridas = {
     "salary_in_usd",
     "remote_ratio",
     "company_size",
+    "employee_residence",
+    "company_location",
 }
 
 faltantes = columnas_requeridas - set(df.columns)
@@ -98,17 +100,110 @@ if ratios_desconocidos:
 
 df["remote_work_mode"] = df["remote_ratio"].map(modalidades)
 
+# Crear variables derivadas para ordenar grupos y describir su contexto.
+orden_experiencia = {
+    "Inicial": 1,
+    "Intermedio": 2,
+    "Senior": 3,
+    "Ejecutivo": 4,
+}
+orden_tamano_empresa = {
+    "Pequeña": 1,
+    "Mediana": 2,
+    "Grande": 3,
+}
+
+df["experience_level_order"] = (
+    df["experience_level"].map(orden_experiencia).astype("Int64")
+)
+df["company_size_order"] = (
+    df["company_size"].map(orden_tamano_empresa).astype("Int64")
+)
+df["work_location_relation"] = (
+    df["employee_residence"]
+    .eq(df["company_location"])
+    .map({True: "Mismo país", False: "País diferente"})
+)
+
+cuartiles_salario = df["salary_in_usd"].quantile([0.25, 0.5, 0.75])
+limites_salario = [
+    float("-inf"),
+    cuartiles_salario.loc[0.25],
+    cuartiles_salario.loc[0.5],
+    cuartiles_salario.loc[0.75],
+    float("inf"),
+]
+if len(set(limites_salario)) != len(limites_salario):
+    raise ValueError(
+        "Los cuartiles de salary_in_usd deben ser distintos para crear bandas."
+    )
+
+df["salary_usd_quartile"] = pd.cut(
+    df["salary_in_usd"],
+    bins=limites_salario,
+    labels=["Hasta Q1", "Q1 a mediana", "Mediana a Q3", "Sobre Q3"],
+    include_lowest=True,
+)
+
 # Revisar que no haya salarios negativos en dólares.
 if (df["salary_in_usd"].dropna() < 0).any():
     raise ValueError("Se encontraron salarios negativos en salary_in_usd.")
 
+columnas_derivadas = [
+    "experience_level_order",
+    "company_size_order",
+    "work_location_relation",
+    "salary_usd_quartile",
+]
+if df[columnas_derivadas].isna().any().any():
+    raise ValueError("Una variable derivada quedó sin valor; revise sus reglas y datos de origen.")
+
 print("\nTamaño después de transformar:", df.shape)
 print("Valores nulos después de transformar:", int(df.isna().sum().sum()))
 print("Filas repetidas conservadas:", int(df.duplicated().sum()))
-print("\nModalidades creadas:")
-print(df["remote_work_mode"].value_counts(dropna=False))
+print("\nVariables derivadas creadas:")
+print(
+    df[
+        [
+            "remote_work_mode",
+            "experience_level_order",
+            "company_size_order",
+            "work_location_relation",
+            "salary_usd_quartile",
+        ]
+    ].head()
+)
 print("\nPrimeras filas transformadas:")
 print(df.head())
+
+# Comparar dimensiones, calidad y salario antes y después, además de la
+# sensibilidad de eliminar únicamente filas idénticas.
+df_sin_duplicados_exactos = df.drop_duplicates()
+
+def resumir_version(nombre, datos):
+    return {
+        "version": nombre,
+        "filas": len(datos),
+        "columnas": len(datos.columns),
+        "duplicados_exactos": int(datos.duplicated().sum()),
+        "porcentaje_duplicados_exactos": round(
+            float(datos.duplicated().mean() * 100), 2
+        ),
+        "valores_nulos": int(datos.isna().sum().sum()),
+        "salario_usd_promedio": round(float(datos["salary_in_usd"].mean()), 2),
+        "salario_usd_mediana": float(datos["salary_in_usd"].median()),
+    }
+
+comparacion_antes_despues = pd.DataFrame(
+    [
+        resumir_version("Original", df_original),
+        resumir_version("Preparado; duplicados conservados", df),
+        resumir_version(
+            "Sensibilidad; sin duplicados exactos",
+            df_sin_duplicados_exactos,
+        ),
+    ]
+)
 
 # Comparar salarios por experiencia, modalidad remota y tamaño de empresa.
 tabla_principal = (
@@ -150,6 +245,11 @@ CARPETA_RESULTADOS.mkdir(parents=True, exist_ok=True)
 
 # Guardar el dataset enriquecido y la tabla principal.
 df.to_csv(RUTA_PREPARADO, index=False, encoding="utf-8-sig")
+comparacion_antes_despues.to_csv(
+    CARPETA_RESULTADOS / "comparacion_antes_despues.csv",
+    index=False,
+    encoding="utf-8-sig",
+)
 
 ruta_tabla_principal = (
     CARPETA_RESULTADOS / "pregunta_principal_salarios_por_grupo.csv"
@@ -264,7 +364,16 @@ lineas_reporte = [
     "=" * 40,
     f"Filas: {len(df)}",
     f"Columnas: {len(df.columns)}",
-    f"Filas repetidas: {int(df.duplicated().sum())}",
+    f"Filas repetidas exactas (conservadas): {int(df.duplicated().sum())}",
+    (
+        "Tratamiento: se conservan porque el dataset no incluye un identificador "
+        "que permita distinguir duplicados erróneos de observaciones legítimas."
+    ),
+    "Sensibilidad al eliminar duplicados exactos:",
+    comparacion_antes_despues.iloc[2].to_string(),
+    "",
+    "Variables derivadas: remote_work_mode, experience_level_order, "
+    "company_size_order, work_location_relation, salary_usd_quartile.",
     "",
     "Columnas y tipos:",
 ]
