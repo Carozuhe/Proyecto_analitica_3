@@ -2,9 +2,10 @@ RESUMEN DEL DATAFRAME PREPARADO
 ========================================
 Filas: 3755
 Columnas: 16
-Filas repetidas exactas (conservadas): 1171
-Tratamiento: se conservan porque el dataset no incluye un identificador que permita distinguir duplicados erróneos de observaciones legítimas.
-Sensibilidad al eliminar duplicados exactos:
+Filas repetidas: 1171
+Tratamiento: se conservan; no existe un identificador para distinguir
+duplicaciones accidentales de observaciones legítimas.
+Sensibilidad sin duplicados exactos:
 version                          Sensibilidad; sin duplicados exactos
 filas                                                            2584
 columnas                                                           16
@@ -13,19 +14,19 @@ porcentaje_duplicados_exactos                                     0.0
 valores_nulos                                                       0
 salario_usd_promedio                                        133409.28
 salario_usd_mediana                                          130000.0
-
-Variables derivadas: remote_work_mode, experience_level_order, company_size_order, work_location_relation, salary_usd_quartile.
+Variables derivadas: remote_work_mode, experience_level_order,
+company_size_order, work_location_relation, salary_usd_quartile.
 
 Columnas y tipos:
-- work_year: Int64
+- work_year: int64
 - experience_level: object
 - employment_type: object
 - job_title: object
-- salary: Int64
+- salary: int64
 - salary_currency: object
-- salary_in_usd: Int64
+- salary_in_usd: int64
 - employee_residence: object
-- remote_ratio: Int64
+- remote_ratio: int64
 - company_location: object
 - company_size: object
 - remote_work_mode: object
@@ -52,13 +53,21 @@ Valores nulos por columna:
 - work_location_relation: 0
 - salary_usd_quartile: 0
 
-Estadísticas descriptivas de las columnas numéricas:
-       work_year      salary  salary_in_usd  remote_ratio  experience_level_order  company_size_order
-count     3755.0      3755.0         3755.0        3755.0                  3755.0              3755.0
-mean     2022.37   190695.57      137570.39         46.27                    2.65                2.08
-std         0.69    671676.5       63055.63         48.59                    0.68                0.39
-min       2020.0      6000.0         5132.0           0.0                     1.0                 1.0
-25%       2022.0    100000.0        95000.0           0.0                     2.0                 2.0
-50%       2022.0    138000.0       135000.0           0.0                     3.0                 2.0
-75%       2023.0    180000.0       175000.0         100.0                     3.0                 2.0
-max       2023.0  30400000.0       450000.0         100.0                     4.0                 3.0
+Estadísticas descriptivas:
+                         count unique              top  freq           mean            std     min       25%       50%       75%         max
+work_year               3755.0    NaN              NaN   NaN    2022.373635       0.691448  2020.0    2022.0    2022.0    2023.0      2023.0
+experience_level          3755      4           Senior  2516            NaN            NaN     NaN       NaN       NaN       NaN         NaN
+employment_type           3755      4  Tiempo completo  3718            NaN            NaN     NaN       NaN       NaN       NaN         NaN
+job_title                 3755     93    Data Engineer  1040            NaN            NaN     NaN       NaN       NaN       NaN         NaN
+salary                  3755.0    NaN              NaN   NaN  190695.571771  671676.500508  6000.0  100000.0  138000.0  180000.0  30400000.0
+salary_currency           3755     20              USD  3224            NaN            NaN     NaN       NaN       NaN       NaN         NaN
+salary_in_usd           3755.0    NaN              NaN   NaN   137570.38988   63055.625278  5132.0   95000.0  135000.0  175000.0    450000.0
+employee_residence        3755     78               US  3004            NaN            NaN     NaN       NaN       NaN       NaN         NaN
+remote_ratio            3755.0    NaN              NaN   NaN      46.271638       48.58905     0.0       0.0       0.0     100.0       100.0
+company_location          3755     72               US  3040            NaN            NaN     NaN       NaN       NaN       NaN         NaN
+company_size              3755      3          Mediana  3153            NaN            NaN     NaN       NaN       NaN       NaN         NaN
+remote_work_mode          3755      3       Presencial  1923            NaN            NaN     NaN       NaN       NaN       NaN         NaN
+experience_level_order  3755.0   <NA>             <NA>  <NA>       2.645539       0.678306     1.0       2.0       3.0       3.0         4.0
+company_size_order      3755.0   <NA>             <NA>  <NA>       2.081491       0.392071     1.0       2.0       2.0       2.0         3.0
+work_location_relation    3755      2       Mismo país  3659            NaN            NaN     NaN       NaN       NaN       NaN         NaN
+salary_usd_quartile       3755      4     Q1 a mediana   967            NaN            NaN     NaN       NaN       NaN       NaN         NaN
