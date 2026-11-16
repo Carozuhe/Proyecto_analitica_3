@@ -6,3 +6,5 @@ notebook==7.2.3
 datasets
 pyarrow
 openpyxl
+streamlit>=1.50
+plotly>=5.24
