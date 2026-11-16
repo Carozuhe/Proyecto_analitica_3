@@ -44,3 +44,38 @@ Para abrir y ejecutar el notebook de AE3:
 ```bash
 python -m notebook src/AE3/Semana_3_AE3.ipynb
 ```
+
+## Entrega AE4: resultados en Streamlit
+
+La aplicación de AE4 presenta las preguntas de negocio, métricas, gráficos,
+conclusiones y limitaciones del análisis. Usa
+`src/AE3/datos/demo-salaries-preparado.csv` y las tablas CSV guardadas en
+`src/AE3/resultados/`; no modifica los archivos fuente.
+
+Desde la raíz del repositorio, instala las dependencias y regenera primero los
+datos y resultados de AE3:
+
+```bash
+python -m pip install -r requirements.txt
+python src/AE3/procesar_dataset.py
+```
+
+Ejecuta todas las celdas del notebook de AE4 para recalcular y guardar las
+tablas que consume Streamlit:
+
+```bash
+python -m notebook src/AE4/Semana_4_AE4.ipynb
+```
+
+Inicia la aplicación:
+
+```bash
+streamlit run src/AE4/app.py
+```
+
+La barra lateral de la aplicación verifica que sus cuatro tablas calculadas
+coincidan con los CSV generados por el notebook. La aplicación está en
+`src/AE4/app.py` y sus dependencias específicas en `src/AE4/requirements.txt`.
+
+**Publicación:** la aplicación todavía no se ha desplegado; por tanto, no hay
+un enlace público disponible.
