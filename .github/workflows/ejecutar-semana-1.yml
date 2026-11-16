@@ -68,7 +68,7 @@ jobs:
             Semana_2EA2.ipynb
 
       - name: Ejecutar Semana_3_AE3.ipynb
-        working-directory: src/Entrega_3
+        working-directory: src/AE3
         run: |
           source ../../.venv/bin/activate
           jupyter nbconvert \
@@ -86,7 +86,7 @@ jobs:
           git add README.md requirements.txt
           git add src/sincronicas
           git add src/Entrega_2
-          git add src/Entrega_3
+          git add src/AE3
 
           if git diff --cached --quiet; then
             echo "No se generaron cambios."

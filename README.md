@@ -27,7 +27,20 @@ El notebook genera el dataset preparado, cuatro tablas CSV, `comparacion_antes_d
 
 ### Ejecución
 
-Desde la raíz del proyecto, ejecuta el script:
+Desde la raíz del proyecto, instala las dependencias:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+Ejecuta el procesamiento de AE3:
 
 ```bash
 python src/AE3/procesar_dataset.py
+```
+
+Para abrir y ejecutar el notebook de AE3:
+
+```bash
+python -m notebook src/AE3/Semana_3_AE3.ipynb
+```
