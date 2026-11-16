@@ -50,32 +50,50 @@ python -m notebook src/AE3/Semana_3_AE3.ipynb
 La aplicación de AE4 presenta las preguntas de negocio, métricas, gráficos,
 conclusiones y limitaciones del análisis. Usa
 `src/AE3/datos/demo-salaries-preparado.csv` y las tablas CSV guardadas en
-`src/AE3/resultados/`; no modifica los archivos fuente.
+`src/AE3/resultados/`; no modifica los archivos fuente. Estos archivos de datos
+ya están incluidos en el repositorio, por lo que no es necesario descargarlos de
+Hugging Face ni ejecutar los notebooks para abrir la aplicación.
 
-Desde la raíz del repositorio, instala las dependencias y regenera primero los
-datos y resultados de AE3:
+### Requisitos
 
-```bash
-python -m pip install -r requirements.txt
-python src/AE3/procesar_dataset.py
+- Python 3.10 o superior
+- Git
+
+### Ejecución local
+
+Clona el repositorio y crea un entorno virtual:
+
+```shell
+git clone https://github.com/Carozuhe/Proyecto_analitica_3
+cd Proyecto_analitica_3
+python -m venv .venv
 ```
 
-Ejecuta todas las celdas del notebook de AE4 para recalcular y guardar las
-tablas que consume Streamlit:
+Activa el entorno virtual:
 
-```bash
-python -m notebook src/AE4/Semana_4_AE4.ipynb
+```powershell
+.venv\Scripts\activate
 ```
 
-Inicia la aplicación:
+En macOS o Linux, usa en su lugar:
 
-```bash
+```shell
+source .venv/bin/activate
+```
+
+Instala las dependencias específicas de Streamlit e inicia la aplicación desde
+la raíz del repositorio:
+
+```shell
+python -m pip install -r src/AE4/requirements.txt
 streamlit run src/AE4/app.py
 ```
 
-La barra lateral de la aplicación verifica que sus cuatro tablas calculadas
-coincidan con los CSV generados por el notebook. La aplicación está en
-`src/AE4/app.py` y sus dependencias específicas en `src/AE4/requirements.txt`.
+La aplicación se abrirá en el navegador en `http://localhost:8501`. Se
+recomienda instalar `src/AE4/requirements.txt`, que contiene solo las
+dependencias de la aplicación (Streamlit, pandas, NumPy y Plotly); el
+`requirements.txt` de la raíz incluye herramientas adicionales que no hacen
+falta para ejecutarla.
 
 **Publicación:** la aplicación todavía no se ha desplegado; por tanto, no hay
 un enlace público disponible.
