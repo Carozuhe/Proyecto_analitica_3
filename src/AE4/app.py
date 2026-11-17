@@ -25,7 +25,7 @@ RUTA_PREPARADO = DIR_AE3 / "datos" / "demo-salaries-preparado.csv"
 DIR_RESULTADOS = DIR_AE3 / "resultados"
 
 # Escribe aquí los nombres del equipo; se muestran en la barra lateral.
-INTEGRANTES: list[str] = []
+INTEGRANTES: list[str] = ["Dainer Ramirez","Lizeth Zuleta"]
 
 COLUMNAS_ORIGINALES = [
     "work_year", "experience_level", "employment_type", "job_title", "salary",
